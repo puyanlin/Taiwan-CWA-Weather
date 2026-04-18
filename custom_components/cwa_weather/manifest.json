@@ -1,0 +1,12 @@
+{
+  "domain": "cwa_weather",
+  "name": "CWA Weather",
+  "version": "1.0.0",
+  "documentation": "https://github.com/puyanlin/hacs-cwa-weather",
+  "issue_tracker": "https://github.com/puyanlin/hacs-cwa-weather/issues",
+  "codeowners": ["@puyanlin"],
+  "requirements": [],
+  "dependencies": [],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}

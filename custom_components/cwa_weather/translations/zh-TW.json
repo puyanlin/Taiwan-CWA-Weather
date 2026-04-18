@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "中央氣象署天氣設定",
+        "description": "請輸入您的中央氣象署 API 金鑰並選擇城市。",
+        "data": {
+          "api_key": "CWA API 金鑰",
+          "city": "城市",
+          "scan_interval": "更新間隔（秒）"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "無法連線至中央氣象署 API，請確認網路連線。",
+      "invalid_auth": "API 金鑰無效，請重新確認您的 CWA API 金鑰。",
+      "city_not_found": "找不到該城市的資料，請選擇有效的城市。"
+    },
+    "abort": {
+      "already_configured": "此城市已設定完成。"
+    }
+  }
+}

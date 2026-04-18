@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "CWA Weather Setup",
+        "description": "Enter your CWA (Central Weather Administration) API key and select your city.",
+        "data": {
+          "api_key": "CWA API Key",
+          "city": "City",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to CWA API. Please check your network.",
+      "invalid_auth": "Invalid API key. Please verify your CWA API key.",
+      "city_not_found": "City not found in CWA data. Please select a valid city."
+    },
+    "abort": {
+      "already_configured": "This city is already configured."
+    }
+  }
+}
