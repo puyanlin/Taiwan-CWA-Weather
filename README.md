@@ -1,5 +1,9 @@
 # Taiwan CWA Weather
 
+<p align="center">
+  <img src="logo.svg" alt="Taiwan CWA Weather Logo" width="120"/>
+</p>
+
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=puyanlin&repository=Taiwan-CWA-Weather&category=integration)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 
