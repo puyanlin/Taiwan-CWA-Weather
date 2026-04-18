@@ -1,9 +1,9 @@
-<h1 align="center">
+<h1 align="left">
   <img src="logo.jpeg" alt="" width="56" align="center" />
   &nbsp;Taiwan CWA Weather
 </h1>
 
-<p align="center">
+<p align="left">
   <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=puyanlin&repository=Taiwan-CWA-Weather&category=integration"><img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Open your Home Assistant instance and open a repository inside the Home Assistant Community Store."/></a>
   <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-orange.svg" alt="hacs_badge"/></a>
 </p>
