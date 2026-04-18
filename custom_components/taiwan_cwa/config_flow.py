@@ -98,6 +98,10 @@ class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=schema,
             errors=errors,
+            description_placeholders={
+                "opendata_host": "opendata.cwa.gov.tw",
+                "opendata_url": "https://opendata.cwa.gov.tw/",
+            },
         )
 
 

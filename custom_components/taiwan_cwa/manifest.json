@@ -1,12 +1,12 @@
 {
   "domain": "taiwan_cwa",
   "name": "Taiwan CWA Weather",
-  "version": "1.1.0",
-  "documentation": "https://github.com/puyanlin/Taiwan-CWA-Weather",
-  "issue_tracker": "https://github.com/puyanlin/Taiwan-CWA-Weather/issues",
   "codeowners": ["@puyanlin"],
-  "requirements": [],
+  "config_flow": true,
   "dependencies": [],
+  "documentation": "https://github.com/puyanlin/Taiwan-CWA-Weather",
   "iot_class": "cloud_polling",
-  "config_flow": true
+  "issue_tracker": "https://github.com/puyanlin/Taiwan-CWA-Weather/issues",
+  "requirements": [],
+  "version": "1.1.1"
 }
