@@ -94,12 +94,45 @@ You will need: / 需要填入：
 
 ## Sensors / 感應器
 
+Each configured city creates four sensors. Entity IDs follow the pattern `sensor.taiwan_cwa_{city_slug}_{sensor}` — for example, Taipei (`taipei`):  
+每個設定的城市會建立四個感應器，entity ID 格式為 `sensor.taiwan_cwa_{城市 slug}_{感應器}`，以臺北市（`taipei`）為例：
+
 | Entity ID | Description | 說明 |
 |---|---|---|
-| `sensor.taiwan_cwa_weather` | Weather condition | 天氣狀況 |
-| `sensor.taiwan_cwa_rain_prob` | Rain probability (%) | 降雨機率 |
-| `sensor.taiwan_cwa_max_temp` | Max temperature (°C) | 最高溫 |
-| `sensor.taiwan_cwa_min_temp` | Min temperature (°C) | 最低溫 |
+| `sensor.taiwan_cwa_taipei_weather` | Weather condition | 天氣狀況 |
+| `sensor.taiwan_cwa_taipei_rain_prob` | Rain probability (%) | 降雨機率（%） |
+| `sensor.taiwan_cwa_taipei_min_temp` | Min temperature (°C) | 最低溫（°C） |
+| `sensor.taiwan_cwa_taipei_max_temp` | Max temperature (°C) | 最高溫（°C） |
+
+<details>
+<summary>City slug reference / 城市 slug 對照</summary>
+
+| City / 城市 | Slug |
+|---|---|
+| 臺北市 | `taipei` |
+| 新北市 | `new_taipei` |
+| 桃園市 | `taoyuan` |
+| 臺中市 | `taichung` |
+| 臺南市 | `tainan` |
+| 高雄市 | `kaohsiung` |
+| 基隆市 | `keelung` |
+| 新竹市 | `hsinchu_city` |
+| 嘉義市 | `chiayi_city` |
+| 新竹縣 | `hsinchu_county` |
+| 苗栗縣 | `miaoli` |
+| 彰化縣 | `changhua` |
+| 南投縣 | `nantou` |
+| 雲林縣 | `yunlin` |
+| 嘉義縣 | `chiayi_county` |
+| 屏東縣 | `pingtung` |
+| 宜蘭縣 | `yilan` |
+| 花蓮縣 | `hualien` |
+| 臺東縣 | `taitung` |
+| 澎湖縣 | `penghu` |
+| 金門縣 | `kinmen` |
+| 連江縣 | `lienchiang` |
+
+</details>
 
 ---
 
