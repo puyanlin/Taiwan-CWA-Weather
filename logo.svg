@@ -1,47 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Background circle -->
-  <circle cx="256" cy="256" r="256" fill="#1a73e8"/>
-
-  <!-- Sun (top right) -->
-  <circle cx="340" cy="155" r="52" fill="#FFD600"/>
-  <!-- Sun rays -->
-  <g stroke="#FFD600" stroke-width="10" stroke-linecap="round">
-    <line x1="340" y1="85"  x2="340" y2="68"/>
-    <line x1="340" y1="225" x2="340" y2="242"/>
-    <line x1="270" y1="155" x2="253" y2="155"/>
-    <line x1="410" y1="155" x2="427" y2="155"/>
-    <line x1="291" y1="106" x2="279" y2="94"/>
-    <line x1="389" y1="204" x2="401" y2="216"/>
-    <line x1="389" y1="106" x2="401" y2="94"/>
-    <line x1="291" y1="204" x2="279" y2="216"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 256" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="196" cy="78" r="40" fill="#FBBF24"/>
+  <g stroke="#F59E0B" stroke-width="6">
+    <line x1="196" y1="10" x2="196" y2="24"/>
+    <line x1="128" y1="78" x2="142" y2="78"/>
+    <line x1="148" y1="30" x2="158" y2="40"/>
+    <line x1="244" y1="30" x2="234" y2="40"/>
+    <line x1="148" y1="126" x2="158" y2="116"/>
+    <line x1="244" y1="126" x2="234" y2="116"/>
   </g>
 
-  <!-- Taiwan island silhouette (simplified, centered-left) -->
-  <path d="
-    M 220 148
-    C 228 130, 248 118, 262 122
-    C 278 126, 285 138, 290 152
-    C 298 172, 295 195, 288 215
-    C 280 238, 268 258, 260 280
-    C 252 302, 250 322, 245 340
-    C 240 358, 232 372, 222 378
-    C 212 384, 200 382, 194 372
-    C 186 360, 186 342, 190 322
-    C 194 302, 200 282, 202 260
-    C 204 240, 200 220, 204 200
-    C 208 178, 212 164, 220 148 Z
-  " fill="white" opacity="0.95"/>
+  <path d="M 284 22
+           C 302 28 312 62 310 104
+           C 308 140 306 172 298 198
+           C 290 222 278 244 264 246
+           C 250 246 238 234 232 220
+           C 222 204 212 186 204 166
+           C 196 144 192 122 196 100
+           C 202 72 214 46 232 32
+           C 252 20 272 18 284 22 Z"
+        fill="#10B981" stroke="#064E3B" stroke-width="10"/>
 
-  <!-- Rain drops (bottom left) -->
-  <g fill="#90CAF9">
-    <!-- Drop 1 -->
-    <ellipse cx="148" cy="330" rx="14" ry="20"/>
-    <polygon points="148,300 136,330 160,330"/>
-    <!-- Drop 2 -->
-    <ellipse cx="192" cy="355" rx="11" ry="16"/>
-    <polygon points="192,330 182,355 202,355"/>
-    <!-- Drop 3 -->
-    <ellipse cx="122" cy="370" rx="9" ry="13"/>
-    <polygon points="122,350 114,370 130,370"/>
+  <g stroke="#3B82F6" stroke-width="8">
+    <line x1="372" y1="124" x2="360" y2="152"/>
+    <line x1="406" y1="144" x2="394" y2="172"/>
+    <line x1="440" y1="128" x2="428" y2="156"/>
+    <line x1="372" y1="180" x2="360" y2="208"/>
+    <line x1="406" y1="200" x2="394" y2="228"/>
+    <line x1="440" y1="184" x2="428" y2="212"/>
   </g>
 </svg>
