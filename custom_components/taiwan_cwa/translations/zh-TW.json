@@ -6,7 +6,7 @@
         "description": "Get your free API key at [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/). Register → Member Center → Apply for API Key.\n\n請至 [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/) 免費申請 API Key。註冊後進入「會員中心」→「API授權碼申請」。",
         "data": {
           "api_key": "CWA API 金鑰",
-          "city": "城市",
+          "city": "初始城市",
           "scan_interval": "更新間隔（秒）"
         }
       }
@@ -17,7 +17,21 @@
       "city_not_found": "找不到該城市的資料，請選擇有效的城市。"
     },
     "abort": {
-      "already_configured": "此城市已設定完成。"
+      "already_configured": "此 API 金鑰已設定完成。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "管理監測城市",
+        "description": "勾選要監測的城市，每個城市會建立 4 個 sensor（天氣狀況、降雨機率、最低溫、最高溫）。儲存後整合會自動重新載入。",
+        "data": {
+          "cities": "城市"
+        }
+      }
+    },
+    "error": {
+      "no_cities": "請至少選擇一個城市。"
     }
   }
 }

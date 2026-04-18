@@ -2,11 +2,11 @@
   "config": {
     "step": {
       "user": {
-        "title": "CWA Weather Setup",
+        "title": "Taiwan CWA Weather Setup",
         "description": "Get your free API key at [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/). Register → Member Center → Apply for API Key.\n\n請至 [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/) 免費申請 API Key。註冊後進入「會員中心」→「API授權碼申請」。",
         "data": {
           "api_key": "CWA API Key",
-          "city": "City",
+          "city": "Initial City",
           "scan_interval": "Update Interval (seconds)"
         }
       }
@@ -17,7 +17,21 @@
       "city_not_found": "City not found in CWA data. Please select a valid city."
     },
     "abort": {
-      "already_configured": "This city is already configured."
+      "already_configured": "This API key is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Manage Cities",
+        "description": "Select the cities to monitor. Each city creates 4 sensors (weather, rain probability, min/max temperature). Changes take effect after reloading.",
+        "data": {
+          "cities": "Cities"
+        }
+      }
+    },
+    "error": {
+      "no_cities": "Please select at least one city."
     }
   }
 }

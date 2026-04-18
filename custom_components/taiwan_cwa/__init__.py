@@ -9,12 +9,11 @@ import async_timeout
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
     CONF_API_KEY,
-    CONF_CITY,
+    CONF_CITIES,
     CONF_SCAN_INTERVAL,
     CWA_API_URL,
     DEFAULT_SCAN_INTERVAL,
@@ -28,17 +27,21 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     api_key = entry.data[CONF_API_KEY]
-    city = entry.data[CONF_CITY]
     scan_interval = entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
+    cities = entry.options.get(CONF_CITIES, [])
 
-    coordinator = CWAWeatherCoordinator(
-        hass, api_key=api_key, city=city, scan_interval=scan_interval
-    )
-    await coordinator.async_config_entry_first_refresh()
+    coordinators: dict[str, CWAWeatherCoordinator] = {}
+    for city in cities:
+        coordinator = CWAWeatherCoordinator(
+            hass, api_key=api_key, city=city, scan_interval=scan_interval
+        )
+        await coordinator.async_config_entry_first_refresh()
+        coordinators[city] = coordinator
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinators
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    entry.async_on_unload(entry.add_update_listener(_async_update_listener))
     return True
 
 
@@ -47,6 +50,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
+
+
+async def _async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    await hass.config_entries.async_reload(entry.entry_id)
 
 
 class CWAWeatherCoordinator(DataUpdateCoordinator):
@@ -62,7 +69,7 @@ class CWAWeatherCoordinator(DataUpdateCoordinator):
         super().__init__(
             hass,
             _LOGGER,
-            name=DOMAIN,
+            name=f"{DOMAIN}_{city}",
             update_interval=timedelta(seconds=scan_interval),
         )
 

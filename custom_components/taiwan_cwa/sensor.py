@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import CONF_CITY, DOMAIN
+from .const import CITY_SLUGS, CONF_CITIES, DOMAIN
 
 
 async def async_setup_entry(
@@ -16,29 +16,33 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    city = entry.data[CONF_CITY]
-    async_add_entities(
-        [
-            CWAWeatherSensor(coordinator, entry, city, "weather"),
-            CWARainProbSensor(coordinator, entry, city),
-            CWAMinTempSensor(coordinator, entry, city),
-            CWAMaxTempSensor(coordinator, entry, city),
-        ]
-    )
+    coordinators: dict = hass.data[DOMAIN][entry.entry_id]
+    entities = []
+    for city, coordinator in coordinators.items():
+        slug = CITY_SLUGS.get(city, city)
+        entities.extend(
+            [
+                CWAWeatherSensor(coordinator, entry, city, slug),
+                CWARainProbSensor(coordinator, entry, city, slug),
+                CWAMinTempSensor(coordinator, entry, city, slug),
+                CWAMaxTempSensor(coordinator, entry, city, slug),
+            ]
+        )
+    async_add_entities(entities)
 
 
 class CWABaseSensor(CoordinatorEntity, SensorEntity):
-    def __init__(self, coordinator, entry, city: str, key: str) -> None:
+    def __init__(self, coordinator, entry, city: str, slug: str, key: str) -> None:
         super().__init__(coordinator)
         self._key = key
         self._city = city
+        self._slug = slug
         self._entry = entry
 
     @property
     def device_info(self):
         return {
-            "identifiers": {(DOMAIN, self._entry.entry_id)},
+            "identifiers": {(DOMAIN, f"{self._entry.entry_id}_{self._slug}")},
             "name": f"Taiwan CWA Weather {self._city}",
             "manufacturer": "Central Weather Administration",
             "model": "F-C0032-001",
@@ -56,11 +60,11 @@ class CWABaseSensor(CoordinatorEntity, SensorEntity):
 class CWAWeatherSensor(CWABaseSensor):
     _attr_icon = "mdi:weather-partly-cloudy"
 
-    def __init__(self, coordinator, entry, city, key):
-        super().__init__(coordinator, entry, city, key)
-        self._attr_unique_id = f"{entry.entry_id}_weather"
-        self._attr_name = f"Taiwan CWA Weather {city}"
-        self.entity_id = "sensor.taiwan_cwa_weather"
+    def __init__(self, coordinator, entry, city, slug):
+        super().__init__(coordinator, entry, city, slug, "weather")
+        self._attr_unique_id = f"{entry.entry_id}_{slug}_weather"
+        self._attr_name = f"Taiwan CWA {city} Weather"
+        self.entity_id = f"sensor.taiwan_cwa_{slug}_weather"
 
     @property
     def state(self):
@@ -72,11 +76,11 @@ class CWARainProbSensor(CWABaseSensor):
     _attr_native_unit_of_measurement = PERCENTAGE
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, coordinator, entry, city):
-        super().__init__(coordinator, entry, city, "rain_prob")
-        self._attr_unique_id = f"{entry.entry_id}_rain_prob"
-        self._attr_name = f"Taiwan CWA Rain Probability {city}"
-        self.entity_id = "sensor.taiwan_cwa_rain_prob"
+    def __init__(self, coordinator, entry, city, slug):
+        super().__init__(coordinator, entry, city, slug, "rain_prob")
+        self._attr_unique_id = f"{entry.entry_id}_{slug}_rain_prob"
+        self._attr_name = f"Taiwan CWA {city} Rain Probability"
+        self.entity_id = f"sensor.taiwan_cwa_{slug}_rain_prob"
 
     @property
     def native_value(self):
@@ -92,11 +96,11 @@ class CWAMinTempSensor(CWABaseSensor):
     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, coordinator, entry, city):
-        super().__init__(coordinator, entry, city, "min_temp")
-        self._attr_unique_id = f"{entry.entry_id}_min_temp"
-        self._attr_name = f"Taiwan CWA Min Temperature {city}"
-        self.entity_id = "sensor.taiwan_cwa_min_temp"
+    def __init__(self, coordinator, entry, city, slug):
+        super().__init__(coordinator, entry, city, slug, "min_temp")
+        self._attr_unique_id = f"{entry.entry_id}_{slug}_min_temp"
+        self._attr_name = f"Taiwan CWA {city} Min Temperature"
+        self.entity_id = f"sensor.taiwan_cwa_{slug}_min_temp"
 
     @property
     def native_value(self):
@@ -112,11 +116,11 @@ class CWAMaxTempSensor(CWABaseSensor):
     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, coordinator, entry, city):
-        super().__init__(coordinator, entry, city, "max_temp")
-        self._attr_unique_id = f"{entry.entry_id}_max_temp"
-        self._attr_name = f"Taiwan CWA Max Temperature {city}"
-        self.entity_id = "sensor.taiwan_cwa_max_temp"
+    def __init__(self, coordinator, entry, city, slug):
+        super().__init__(coordinator, entry, city, slug, "max_temp")
+        self._attr_unique_id = f"{entry.entry_id}_{slug}_max_temp"
+        self._attr_name = f"Taiwan CWA {city} Max Temperature"
+        self.entity_id = f"sensor.taiwan_cwa_{slug}_max_temp"
 
     @property
     def native_value(self):

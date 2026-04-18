@@ -1,6 +1,7 @@
 DOMAIN = "taiwan_cwa"
 CONF_API_KEY = "api_key"
 CONF_CITY = "city"
+CONF_CITIES = "cities"
 CONF_SCAN_INTERVAL = "scan_interval"
 
 DEFAULT_CITY = "臺北市"
@@ -32,6 +33,31 @@ CITIES = [
     "金門縣",
     "連江縣",
 ]
+
+CITY_SLUGS = {
+    "臺北市": "taipei",
+    "新北市": "new_taipei",
+    "桃園市": "taoyuan",
+    "臺中市": "taichung",
+    "臺南市": "tainan",
+    "高雄市": "kaohsiung",
+    "基隆市": "keelung",
+    "新竹市": "hsinchu_city",
+    "嘉義市": "chiayi_city",
+    "新竹縣": "hsinchu_county",
+    "苗栗縣": "miaoli",
+    "彰化縣": "changhua",
+    "南投縣": "nantou",
+    "雲林縣": "yunlin",
+    "嘉義縣": "chiayi_county",
+    "屏東縣": "pingtung",
+    "宜蘭縣": "yilan",
+    "花蓮縣": "hualien",
+    "臺東縣": "taitung",
+    "澎湖縣": "penghu",
+    "金門縣": "kinmen",
+    "連江縣": "lienchiang",
+}
 
 SENSOR_WEATHER = "weather"
 SENSOR_RAIN_PROB = "rain_prob"

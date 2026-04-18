@@ -6,11 +6,17 @@ import async_timeout
 import voluptuous as vol
 
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
+from homeassistant.core import callback
+from homeassistant.helpers.selector import (
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
+)
 
 from .const import (
     CITIES,
     CONF_API_KEY,
+    CONF_CITIES,
     CONF_CITY,
     CONF_SCAN_INTERVAL,
     CWA_API_URL,
@@ -21,7 +27,7 @@ from .const import (
 
 
 async def _validate_api_key(api_key: str, city: str) -> str | None:
-    """Return error string or None if valid."""
+    """Return error key or None if valid."""
     params = {"Authorization": api_key, "locationName": city, "format": "JSON"}
     connector = aiohttp.TCPConnector(ssl=False)
     try:
@@ -43,23 +49,33 @@ async def _validate_api_key(api_key: str, city: str) -> str | None:
 class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
+    @staticmethod
+    @callback
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry,
+    ) -> CWAWeatherOptionsFlow:
+        return CWAWeatherOptionsFlow()
+
     async def async_step_user(self, user_input=None):
         errors = {}
 
         if user_input is not None:
-            error = await _validate_api_key(
-                user_input[CONF_API_KEY], user_input[CONF_CITY]
-            )
+            initial_city = user_input[CONF_CITY]
+            error = await _validate_api_key(user_input[CONF_API_KEY], initial_city)
             if error:
                 errors["base"] = error
             else:
-                await self.async_set_unique_id(
-                    f"{user_input[CONF_API_KEY][:8]}_{user_input[CONF_CITY]}"
-                )
+                await self.async_set_unique_id(user_input[CONF_API_KEY][:8])
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title=f"Taiwan CWA Weather – {user_input[CONF_CITY]}",
-                    data=user_input,
+                    title="Taiwan CWA Weather",
+                    data={
+                        CONF_API_KEY: user_input[CONF_API_KEY],
+                        CONF_SCAN_INTERVAL: user_input.get(
+                            CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+                        ),
+                    },
+                    options={CONF_CITIES: [initial_city]},
                 )
 
         schema = vol.Schema(
@@ -74,6 +90,37 @@ class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user",
+            data_schema=schema,
+            errors=errors,
+        )
+
+
+class CWAWeatherOptionsFlow(config_entries.OptionsFlow):
+    async def async_step_init(self, user_input=None):
+        errors = {}
+        current_cities = self.config_entry.options.get(CONF_CITIES, [])
+
+        if user_input is not None:
+            cities = user_input.get(CONF_CITIES, [])
+            if not cities:
+                errors["base"] = "no_cities"
+            else:
+                return self.async_create_entry(data={CONF_CITIES: cities})
+
+        schema = vol.Schema(
+            {
+                vol.Required(CONF_CITIES, default=current_cities): SelectSelector(
+                    SelectSelectorConfig(
+                        options=CITIES,
+                        multiple=True,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
+            }
+        )
+
+        return self.async_show_form(
+            step_id="init",
             data_schema=schema,
             errors=errors,
         )
