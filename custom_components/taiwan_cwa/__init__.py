@@ -1,4 +1,4 @@
-"""CWA Weather integration for Home Assistant."""
+"""Taiwan CWA Weather integration for Home Assistant."""
 from __future__ import annotations
 
 import logging

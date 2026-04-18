@@ -1,4 +1,4 @@
-# CWA Weather — Home Assistant Custom Integration
+# Taiwan CWA Weather — Home Assistant Custom Integration
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 
@@ -10,10 +10,10 @@
 
 | Entity ID | 說明 | 單位 |
 |---|---|---|
-| `sensor.cwa_weather` | 天氣狀況（如「陰短暫陣雨」） | — |
-| `sensor.cwa_rain_prob` | 降雨機率 | % |
-| `sensor.cwa_min_temp` | 今日最低溫 | °C |
-| `sensor.cwa_max_temp` | 今日最高溫 | °C |
+| `sensor.taiwan_cwa_weather` | 天氣狀況（如「陰短暫陣雨」） | — |
+| `sensor.taiwan_cwa_rain_prob` | 降雨機率 | % |
+| `sensor.taiwan_cwa_min_temp` | 今日最低溫 | °C |
+| `sensor.taiwan_cwa_max_temp` | 今日最高溫 | °C |
 
 ---
 
@@ -33,17 +33,17 @@
 1. 在 Home Assistant 中開啟 **HACS**
 2. 點選右上角 **⋮** → **Custom repositories**
 3. 輸入此 repo URL，類型選 **Integration**，按 **ADD**
-4. 搜尋 **CWA Weather** 並安裝
+4. 搜尋 **Taiwan CWA Weather** 並安裝
 5. 重新啟動 Home Assistant
 
 ### 方法二：手動安裝
 
 1. 下載此 repo 並解壓縮
-2. 將 `custom_components/cwa_weather/` 整個目錄複製到您 HA 設定目錄的 `custom_components/` 下：
+2. 將 `custom_components/taiwan_cwa/` 整個目錄複製到您 HA 設定目錄的 `custom_components/` 下：
    ```
    config/
    └── custom_components/
-       └── cwa_weather/
+       └── taiwan_cwa/
            ├── __init__.py
            ├── manifest.json
            ├── config_flow.py
@@ -58,7 +58,7 @@
 ## 設定
 
 1. 前往 **設定 → 裝置與服務 → 新增整合**
-2. 搜尋 **CWA Weather**
+2. 搜尋 **Taiwan CWA Weather**
 3. 填入：
    - **CWA API 金鑰**：您的 CWA 授權碼
    - **城市**：從下拉選單選擇（預設：臺北市）

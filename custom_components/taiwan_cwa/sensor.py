@@ -1,4 +1,4 @@
-"""CWA Weather sensors."""
+"""Taiwan CWA Weather sensors."""
 from __future__ import annotations
 
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
@@ -39,7 +39,7 @@ class CWABaseSensor(CoordinatorEntity, SensorEntity):
     def device_info(self):
         return {
             "identifiers": {(DOMAIN, self._entry.entry_id)},
-            "name": f"CWA Weather {self._city}",
+            "name": f"Taiwan CWA Weather {self._city}",
             "manufacturer": "Central Weather Administration",
             "model": "F-C0032-001",
         }
@@ -59,8 +59,8 @@ class CWAWeatherSensor(CWABaseSensor):
     def __init__(self, coordinator, entry, city, key):
         super().__init__(coordinator, entry, city, key)
         self._attr_unique_id = f"{entry.entry_id}_weather"
-        self._attr_name = f"CWA Weather {city}"
-        self.entity_id = "sensor.cwa_weather"
+        self._attr_name = f"Taiwan CWA Weather {city}"
+        self.entity_id = "sensor.taiwan_cwa_weather"
 
     @property
     def state(self):
@@ -75,8 +75,8 @@ class CWARainProbSensor(CWABaseSensor):
     def __init__(self, coordinator, entry, city):
         super().__init__(coordinator, entry, city, "rain_prob")
         self._attr_unique_id = f"{entry.entry_id}_rain_prob"
-        self._attr_name = f"CWA Rain Probability {city}"
-        self.entity_id = "sensor.cwa_rain_prob"
+        self._attr_name = f"Taiwan CWA Rain Probability {city}"
+        self.entity_id = "sensor.taiwan_cwa_rain_prob"
 
     @property
     def native_value(self):
@@ -95,8 +95,8 @@ class CWAMinTempSensor(CWABaseSensor):
     def __init__(self, coordinator, entry, city):
         super().__init__(coordinator, entry, city, "min_temp")
         self._attr_unique_id = f"{entry.entry_id}_min_temp"
-        self._attr_name = f"CWA Min Temperature {city}"
-        self.entity_id = "sensor.cwa_min_temp"
+        self._attr_name = f"Taiwan CWA Min Temperature {city}"
+        self.entity_id = "sensor.taiwan_cwa_min_temp"
 
     @property
     def native_value(self):
@@ -115,8 +115,8 @@ class CWAMaxTempSensor(CWABaseSensor):
     def __init__(self, coordinator, entry, city):
         super().__init__(coordinator, entry, city, "max_temp")
         self._attr_unique_id = f"{entry.entry_id}_max_temp"
-        self._attr_name = f"CWA Max Temperature {city}"
-        self.entity_id = "sensor.cwa_max_temp"
+        self._attr_name = f"Taiwan CWA Max Temperature {city}"
+        self.entity_id = "sensor.taiwan_cwa_max_temp"
 
     @property
     def native_value(self):

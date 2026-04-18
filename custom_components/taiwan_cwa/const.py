@@ -1,4 +1,4 @@
-DOMAIN = "cwa_weather"
+DOMAIN = "taiwan_cwa"
 CONF_API_KEY = "api_key"
 CONF_CITY = "city"
 CONF_SCAN_INTERVAL = "scan_interval"

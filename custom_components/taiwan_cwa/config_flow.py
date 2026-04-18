@@ -1,4 +1,4 @@
-"""Config flow for CWA Weather integration."""
+"""Config flow for Taiwan CWA Weather integration."""
 from __future__ import annotations
 
 import aiohttp
@@ -58,7 +58,7 @@ class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title=f"CWA Weather – {user_input[CONF_CITY]}",
+                    title=f"Taiwan CWA Weather – {user_input[CONF_CITY]}",
                     data=user_input,
                 )
 
