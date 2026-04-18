@@ -118,6 +118,19 @@ You will need: / 需要填入：
 
 ---
 
+## Support / 支持
+
+If this integration is useful for your Home Assistant setup, consider buying me a coffee — it keeps the updates coming.  
+如果這個整合對你的 Home Assistant 有幫助，歡迎請我喝杯咖啡，讓更新持續下去。
+
+<p align="center">
+  <a href="https://paypal.me/puyanlin">
+    <img src="https://img.shields.io/badge/PayPal-Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate via PayPal"/>
+  </a>
+</p>
+
+---
+
 ## License
 
 MIT
