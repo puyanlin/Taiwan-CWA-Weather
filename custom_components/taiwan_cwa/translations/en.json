@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "CWA Weather Setup",
-        "description": "Get your free API key at [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/). Register → Member Center → Apply for API Key.",
+        "description": "Get your free API key at [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/). Register → Member Center → Apply for API Key.\n\n請至 [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/) 免費申請 API Key。註冊後進入「會員中心」→「API授權碼申請」。",
         "data": {
           "api_key": "CWA API Key",
           "city": "City",
