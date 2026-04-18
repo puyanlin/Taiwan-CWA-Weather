@@ -128,9 +128,3 @@ If this integration is useful for your Home Assistant setup, consider buying me 
     <img src="https://img.shields.io/badge/PayPal-Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate via PayPal"/>
   </a>
 </p>
-
----
-
-## License
-
-MIT
