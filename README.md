@@ -1,11 +1,12 @@
-# Taiwan CWA Weather
+<h1 align="center">
+  <img src="logo.jpeg" alt="" width="56" align="center" />
+  &nbsp;Taiwan CWA Weather
+</h1>
 
 <p align="center">
-  <img src="logo.jpeg" alt="Taiwan CWA Weather Logo" width="120"/>
+  <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=puyanlin&repository=Taiwan-CWA-Weather&category=integration"><img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Open your Home Assistant instance and open a repository inside the Home Assistant Community Store."/></a>
+  <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-orange.svg" alt="hacs_badge"/></a>
 </p>
-
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=puyanlin&repository=Taiwan-CWA-Weather&category=integration)
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 
 A Home Assistant custom integration for Taiwan Central Weather Administration (中央氣象署, CWA) weather data.  
 台灣中央氣象署天氣資料的 Home Assistant 自訂整合。
