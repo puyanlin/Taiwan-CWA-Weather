@@ -14,7 +14,8 @@ from homeassistant.helpers.selector import (
 )
 
 from .const import (
-    CITIES,
+    CITY_EN_NAMES,
+    CITY_OPTIONS,
     CONF_API_KEY,
     CONF_CITIES,
     CONF_CITY,
@@ -81,7 +82,12 @@ class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         schema = vol.Schema(
             {
                 vol.Required(CONF_API_KEY): str,
-                vol.Required(CONF_CITY, default=DEFAULT_CITY): vol.In(CITIES),
+                vol.Required(CONF_CITY, default=DEFAULT_CITY): SelectSelector(
+                    SelectSelectorConfig(
+                        options=CITY_OPTIONS,
+                        mode=SelectSelectorMode.DROPDOWN,
+                    )
+                ),
                 vol.Optional(
                     CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
                 ): vol.All(vol.Coerce(int), vol.Range(min=300, max=86400)),
@@ -96,6 +102,9 @@ class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 
 class CWAWeatherOptionsFlow(config_entries.OptionsFlow):
+    def __init__(self) -> None:
+        self._pending_cities: list[str] | None = None
+
     async def async_step_init(self, user_input=None):
         errors = {}
         current_cities = self.config_entry.options.get(CONF_CITIES, [])
@@ -105,13 +114,17 @@ class CWAWeatherOptionsFlow(config_entries.OptionsFlow):
             if not cities:
                 errors["base"] = "no_cities"
             else:
+                removed = [c for c in current_cities if c not in cities]
+                if removed:
+                    self._pending_cities = cities
+                    return await self.async_step_confirm_remove()
                 return self.async_create_entry(data={CONF_CITIES: cities})
 
         schema = vol.Schema(
             {
                 vol.Required(CONF_CITIES, default=current_cities): SelectSelector(
                     SelectSelectorConfig(
-                        options=CITIES,
+                        options=CITY_OPTIONS,
                         multiple=True,
                         mode=SelectSelectorMode.LIST,
                     )
@@ -123,4 +136,21 @@ class CWAWeatherOptionsFlow(config_entries.OptionsFlow):
             step_id="init",
             data_schema=schema,
             errors=errors,
+        )
+
+    async def async_step_confirm_remove(self, user_input=None):
+        current_cities = self.config_entry.options.get(CONF_CITIES, [])
+        cities = self._pending_cities if self._pending_cities is not None else current_cities
+        removed = [c for c in current_cities if c not in cities]
+        removed_labels = "\n".join(
+            f"- {c} ({CITY_EN_NAMES.get(c, c)})" for c in removed
+        )
+
+        if user_input is not None:
+            return self.async_create_entry(data={CONF_CITIES: cities})
+
+        return self.async_show_form(
+            step_id="confirm_remove",
+            data_schema=vol.Schema({}),
+            description_placeholders={"cities": removed_labels},
         )

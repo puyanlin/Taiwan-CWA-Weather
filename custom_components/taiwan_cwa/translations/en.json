@@ -23,11 +23,15 @@
   "options": {
     "step": {
       "init": {
-        "title": "Manage Cities",
-        "description": "Select the cities to monitor. Each city creates 4 sensors (weather, rain probability, min/max temperature). Changes take effect after reloading.",
+        "title": "Manage Cities / 管理監測城市",
+        "description": "Select the cities to monitor. Each city creates 4 sensors (weather, rain probability, min/max temperature). Changes take effect after reloading.\n\n勾選要監測的城市，每個城市會建立 4 個 sensor（天氣狀況、降雨機率、最低溫、最高溫）。儲存後整合會自動重新載入。",
         "data": {
-          "cities": "Cities"
+          "cities": "Cities / 城市"
         }
+      },
+      "confirm_remove": {
+        "title": "Confirm Removal / 確認移除",
+        "description": "⚠️ The following cities will be removed, along with their devices and sensors. This cannot be undone.\n\n以下城市將被移除，對應的裝置與 sensor 也會一併刪除。此動作無法復原。\n\n{cities}\n\nPress Submit to confirm, or go back to cancel.\n按「提交」確認，或返回取消。"
       }
     },
     "error": {

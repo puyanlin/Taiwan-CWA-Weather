@@ -9,9 +9,11 @@ import async_timeout
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
+    CITY_SLUGS,
     CONF_API_KEY,
     CONF_CITIES,
     CONF_SCAN_INTERVAL,
@@ -29,6 +31,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     api_key = entry.data[CONF_API_KEY]
     scan_interval = entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
     cities = entry.options.get(CONF_CITIES, [])
+
+    _async_cleanup_stale_devices(hass, entry, cities)
 
     coordinators: dict[str, CWAWeatherCoordinator] = {}
     for city in cities:
@@ -54,6 +58,22 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def _async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
     await hass.config_entries.async_reload(entry.entry_id)
+
+
+def _async_cleanup_stale_devices(
+    hass: HomeAssistant, entry: ConfigEntry, cities: list[str]
+) -> None:
+    """Remove devices for cities that are no longer selected."""
+    active_identifiers = {
+        f"{entry.entry_id}_{CITY_SLUGS.get(city, city)}" for city in cities
+    }
+    dev_reg = dr.async_get(hass)
+    for device in list(dr.async_entries_for_config_entry(dev_reg, entry.entry_id)):
+        if not any(
+            domain == DOMAIN and identifier in active_identifiers
+            for domain, identifier in device.identifiers
+        ):
+            dev_reg.async_remove_device(device.id)
 
 
 class CWAWeatherCoordinator(DataUpdateCoordinator):
