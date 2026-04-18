@@ -1,9 +1,9 @@
 {
   "domain": "taiwan_cwa",
   "name": "Taiwan CWA Weather",
-  "version": "1.0.3",
-  "documentation": "https://github.com/puyanlin/hacs-cwa-weather",
-  "issue_tracker": "https://github.com/puyanlin/hacs-cwa-weather/issues",
+  "version": "1.1.0",
+  "documentation": "https://github.com/puyanlin/Taiwan-CWA-Weather",
+  "issue_tracker": "https://github.com/puyanlin/Taiwan-CWA-Weather/issues",
   "codeowners": ["@puyanlin"],
   "requirements": [],
   "dependencies": [],
