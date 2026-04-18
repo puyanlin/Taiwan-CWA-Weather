@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "中央氣象署天氣設定",
-        "description": "請輸入您的中央氣象署 API 金鑰並選擇城市。",
+        "description": "請至 [opendata.cwa.gov.tw](https://opendata.cwa.gov.tw/) 免費申請 API Key。註冊後進入「會員中心」→「API授權碼申請」。",
         "data": {
           "api_key": "CWA API 金鑰",
           "city": "城市",
