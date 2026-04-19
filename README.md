@@ -139,8 +139,7 @@ Each configured city creates four sensors. Entity IDs follow the pattern `sensor
 
 ## Supported Cities / 支援縣市
 
-Taipei, New Taipei, Taoyuan, Taichung, Tainan, Kaohsiung, Keelung, Hsinchu City, Hsinchu County, Miaoli, Changhua, Nantou, Yunlin, Chiayi City, Chiayi County, Pingtung, Yilan, Hualien, Taitung, Penghu, Kinmen, Lienchiang (Matsu)  
-臺北市、新北市、桃園市、臺中市、臺南市、高雄市、基隆市、新竹市、新竹縣、苗栗縣、彰化縣、南投縣、雲林縣、嘉義市、嘉義縣、屏東縣、宜蘭縣、花蓮縣、臺東縣、澎湖縣、金門縣、連江縣
+Taipei (臺北市)、New Taipei (新北市)、Taoyuan (桃園市)、Taichung (臺中市)、Tainan (臺南市)、Kaohsiung (高雄市)、Keelung (基隆市)、Hsinchu City (新竹市)、Hsinchu County (新竹縣)、Miaoli (苗栗縣)、Changhua (彰化縣)、Nantou (南投縣)、Yunlin (雲林縣)、Chiayi City (嘉義市)、Chiayi County (嘉義縣)、Pingtung (屏東縣)、Yilan (宜蘭縣)、Hualien (花蓮縣)、Taitung (臺東縣)、Penghu (澎湖縣)、Kinmen (金門縣)、Lienchiang / Matsu (連江縣)
 
 ---
 
