@@ -6,7 +6,8 @@ import async_timeout
 import voluptuous as vol
 
 from homeassistant import config_entries
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.selector import (
     SelectSelector,
     SelectSelectorConfig,
@@ -27,21 +28,20 @@ from .const import (
 )
 
 
-async def _validate_api_key(api_key: str, city: str) -> str | None:
+async def _validate_api_key(hass: HomeAssistant, api_key: str, city: str) -> str | None:
     """Return error key or None if valid."""
     params = {"Authorization": api_key, "locationName": city, "format": "JSON"}
-    connector = aiohttp.TCPConnector(ssl=False)
+    session = async_get_clientsession(hass)
     try:
         async with async_timeout.timeout(15):
-            async with aiohttp.ClientSession(connector=connector) as session:
-                async with session.get(CWA_API_URL, params=params) as resp:
-                    if resp.status == 401:
-                        return "invalid_auth"
-                    if resp.status != 200:
-                        return "cannot_connect"
-                    data = await resp.json()
-                    if not data.get("records", {}).get("location"):
-                        return "city_not_found"
+            async with session.get(CWA_API_URL, params=params) as resp:
+                if resp.status == 401:
+                    return "invalid_auth"
+                if resp.status != 200:
+                    return "cannot_connect"
+                data = await resp.json()
+                if not data.get("records", {}).get("location"):
+                    return "city_not_found"
     except (aiohttp.ClientError, TimeoutError):
         return "cannot_connect"
     return None
@@ -62,7 +62,9 @@ class CWAWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             initial_city = user_input[CONF_CITY]
-            error = await _validate_api_key(user_input[CONF_API_KEY], initial_city)
+            error = await _validate_api_key(
+                self.hass, user_input[CONF_API_KEY], initial_city
+            )
             if error:
                 errors["base"] = error
             else:

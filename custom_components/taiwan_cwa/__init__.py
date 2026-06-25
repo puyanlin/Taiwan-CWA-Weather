@@ -10,6 +10,7 @@ import async_timeout
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
@@ -99,14 +100,13 @@ class CWAWeatherCoordinator(DataUpdateCoordinator):
             "locationName": self.city,
             "format": "JSON",
         }
-        connector = aiohttp.TCPConnector(ssl=False)
+        session = async_get_clientsession(self.hass)
         try:
             async with async_timeout.timeout(30):
-                async with aiohttp.ClientSession(connector=connector) as session:
-                    async with session.get(CWA_API_URL, params=params) as resp:
-                        if resp.status != 200:
-                            raise UpdateFailed(f"CWA API returned {resp.status}")
-                        data = await resp.json()
+                async with session.get(CWA_API_URL, params=params) as resp:
+                    if resp.status != 200:
+                        raise UpdateFailed(f"CWA API returned {resp.status}")
+                    data = await resp.json()
         except aiohttp.ClientError as err:
             raise UpdateFailed(f"CWA API request failed: {err}") from err
 

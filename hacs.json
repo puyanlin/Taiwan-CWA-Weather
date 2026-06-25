@@ -1,4 +1,5 @@
 {
   "name": "Taiwan CWA Weather",
-  "render_readme": true
+  "render_readme": true,
+  "country": ["TW"]
 }
