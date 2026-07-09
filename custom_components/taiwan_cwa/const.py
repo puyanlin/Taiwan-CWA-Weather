@@ -186,9 +186,29 @@ _cwa_ssl_context: ssl.SSLContext | None = None
 
 
 def _build_cwa_ssl_context() -> ssl.SSLContext:
-    """Create a verifying SSL context augmented with the TWCA chain."""
+    """Create a verifying SSL context that tolerates CWA's certificate quirks.
+
+    Two problems have to be solved without disabling verification (which would
+    leak the API key to on-path attackers):
+
+    1. Missing Subject Key Identifier. The certificate chain served by
+       opendata.cwa.gov.tw trips the strict RFC 5280 extension checks. Python
+       3.13's ssl.create_default_context() enables VERIFY_X509_STRICT by
+       default, so OpenSSL rejects the chain with
+       "certificate verify failed: Missing Subject Key Identifier". Clearing
+       that one flag relaxes the pedantic extension checks while still
+       verifying the signature chain, host name, expiry and trust anchor — the
+       SKI is only a chain-building hint, not a security control, so MITM
+       protection stays intact.
+
+    2. CA availability. The TWCA root + intermediate are bundled in so the
+       chain still completes if the host CA store predates the TWCA Global Root
+       CA or the server omits its intermediate. This is additive: a future
+       chain rotation is still verified by the host CA store.
+    """
     context = ssl.create_default_context()
     context.load_verify_locations(cadata=TWCA_CA_BUNDLE)
+    context.verify_flags &= ~ssl.VERIFY_X509_STRICT
     return context
 
 

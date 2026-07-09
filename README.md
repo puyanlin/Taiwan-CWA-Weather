@@ -166,8 +166,8 @@ Each configured city creates four sensors. Entity IDs follow the pattern `sensor
 
 ## Notes / 注意事項
 
-- CWA's SSL certificate is missing the Subject Key Identifier extension. This integration disables SSL verification for the CWA API endpoint only.  
-  CWA 官方 API 的 SSL 憑證缺少 Subject Key Identifier，本整合僅針對該 API 停用 SSL 驗證。
+- CWA's SSL certificate is missing the Subject Key Identifier extension, which Python 3.13's strict verification rejects. This integration keeps full TLS verification (signature chain, host name, expiry and trust anchor) and only relaxes that one pedantic RFC extension check, so the API key is never sent over an unverified connection.  
+  CWA 官方 API 的 SSL 憑證缺少 Subject Key Identifier，會被 Python 3.13 的嚴格驗證擋下。本整合仍完整驗證 TLS（簽章鏈、主機名稱、效期與信任根），僅放寬這一項 RFC 擴充欄位的嚴格檢查，因此 API 金鑰不會透過未驗證的連線傳送。
 - Data is sourced from the F-C0032-001 dataset (36-hour forecast).  
   資料來源為 F-C0032-001（36小時預報）。
 
