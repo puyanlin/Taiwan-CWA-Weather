@@ -21,6 +21,7 @@ from .const import (
     CWA_API_URL,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
+    async_get_cwa_ssl_context,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -101,12 +102,17 @@ class CWAWeatherCoordinator(DataUpdateCoordinator):
             "format": "JSON",
         }
         session = async_get_clientsession(self.hass)
+        ssl_context = await async_get_cwa_ssl_context(self.hass)
         try:
             async with async_timeout.timeout(30):
-                async with session.get(CWA_API_URL, params=params) as resp:
+                async with session.get(
+                    CWA_API_URL, params=params, ssl=ssl_context
+                ) as resp:
                     if resp.status != 200:
                         raise UpdateFailed(f"CWA API returned {resp.status}")
-                    data = await resp.json()
+                    # CWA serves JSON as application/octet-stream, so skip
+                    # aiohttp's content-type check with content_type=None.
+                    data = await resp.json(content_type=None)
         except aiohttp.ClientError as err:
             raise UpdateFailed(f"CWA API request failed: {err}") from err
 

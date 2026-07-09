@@ -25,6 +25,7 @@ from .const import (
     DEFAULT_CITY,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
+    async_get_cwa_ssl_context,
 )
 
 
@@ -32,14 +33,17 @@ async def _validate_api_key(hass: HomeAssistant, api_key: str, city: str) -> str
     """Return error key or None if valid."""
     params = {"Authorization": api_key, "locationName": city, "format": "JSON"}
     session = async_get_clientsession(hass)
+    ssl_context = await async_get_cwa_ssl_context(hass)
     try:
         async with async_timeout.timeout(15):
-            async with session.get(CWA_API_URL, params=params) as resp:
+            async with session.get(CWA_API_URL, params=params, ssl=ssl_context) as resp:
                 if resp.status == 401:
                     return "invalid_auth"
                 if resp.status != 200:
                     return "cannot_connect"
-                data = await resp.json()
+                # CWA serves JSON as application/octet-stream, so skip
+                # aiohttp's content-type check with content_type=None.
+                data = await resp.json(content_type=None)
                 if not data.get("records", {}).get("location"):
                     return "city_not_found"
     except (aiohttp.ClientError, TimeoutError):
